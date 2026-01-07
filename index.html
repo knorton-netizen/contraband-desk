@@ -119,6 +119,29 @@
       .meta { font-size: 13px; margin-bottom: 16px; flex-wrap: nowrap; }
       li { font-size: 18px; margin-bottom: 12px; line-height: 1.3; }
     }
+      /* Group headers */
+.state-header{
+  margin: 18px 0 6px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Normal headline list items */
+.headline-item{
+  margin: 0 0 14px;
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+@media (min-width: 700px){
+  .state-header{ font-size: 14px; margin-top: 20px; }
+  .headline-item{ font-size: 18px; line-height: 1.3; margin-bottom: 12px; }
+}
+
+    
   </style>
 </head>
 
@@ -136,46 +159,104 @@
   </ul>
 
   <script>
-    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?output=tsv";
+  const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?output=tsv";
 
-    function parseTSV(text) {
-      const lines = text.trim().split(/\r?\n/);
-      if (lines.length <= 1) return [];
-      return lines.slice(1).map(line => {
-        const parts = line.split("\t");
-        const title = (parts[0] || "").trim().replace(/^"|"$/g, "");
-        const url   = (parts[1] || "").trim().replace(/^"|"$/g, "");
-        return { title, url };
-      }).filter(r => r.title && r.url);
+  function splitTSVLine(line) {
+    // Basic TSV split + trim + remove wrapping quotes
+    return line.split("\t").map(v => (v || "").trim().replace(/^"|"$/g, ""));
+  }
+
+  function parseTSV(text) {
+    const lines = text.trim().split(/\r?\n/);
+    if (lines.length <= 1) return [];
+
+    const headers = splitTSVLine(lines[0]).map(h => h.toLowerCase());
+
+    // Find columns by header name (robust even if you rearrange sheet columns)
+    const idxTitle = headers.findIndex(h => h === "article title" || h === "title");
+    const idxLink  = headers.findIndex(h => h === "link" || h === "url");
+    const idxState = headers.findIndex(h => h === "state");
+
+    if (idxTitle === -1 || idxLink === -1) {
+      console.error("Missing required columns. Need 'Article Title' and 'Link'. Headers:", headers);
+      return [];
     }
 
-    fetch(SHEET_URL)
-      .then(res => res.text())
-      .then(text => {
-        const entries = parseTSV(text);
-        const listEl = document.getElementById("headline-list");
-        listEl.innerHTML = "";
+    return lines.slice(1).map(line => {
+      const cols = splitTSVLine(line);
+      const title = cols[idxTitle] || "";
+      const url   = cols[idxLink]  || "";
+      const state = (idxState !== -1 ? (cols[idxState] || "") : "");
 
-        entries.slice(0, 150).forEach(item => {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = item.url;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = item.title;
-          li.appendChild(a);
-          listEl.appendChild(li);
-        });
+      return { title, url, state };
+    }).filter(r => r.title && r.url);
+  }
 
-        document.getElementById("last-updated").textContent =
-          "Updated: " + new Date().toLocaleString();
-      })
-      .catch(err => {
-        console.error("Error loading sheet:", err);
-        document.getElementById("headline-list").innerHTML =
-          "<li>Unable to load headlines.</li>";
+  function normalizeState(state) {
+    // Keep it simple; treat blanks as "Unknown"
+    const s = (state || "").trim();
+    return s ? s : "Unknown";
+  }
+
+  fetch(SHEET_URL)
+    .then(res => res.text())
+    .then(text => {
+      let entries = parseTSV(text).slice(0, 500); // raise cap if you want more
+
+      // Sort by State A-Z, then Title A-Z
+      entries.sort((a, b) => {
+        const sa = normalizeState(a.state).toLowerCase();
+        const sb = normalizeState(b.state).toLowerCase();
+        if (sa < sb) return -1;
+        if (sa > sb) return 1;
+
+        const ta = a.title.toLowerCase();
+        const tb = b.title.toLowerCase();
+        if (ta < tb) return -1;
+        if (ta > tb) return 1;
+        return 0;
       });
-  </script>
+
+      const listEl = document.getElementById("headline-list");
+      listEl.innerHTML = "";
+
+      // Grouped rendering by state
+      let currentState = null;
+
+      entries.forEach(item => {
+        const state = normalizeState(item.state);
+
+        if (state !== currentState) {
+          currentState = state;
+
+          const headerLi = document.createElement("li");
+          headerLi.className = "state-header";
+          headerLi.textContent = currentState;
+          listEl.appendChild(headerLi);
+        }
+
+        const li = document.createElement("li");
+        li.className = "headline-item";
+
+        const a = document.createElement("a");
+        a.href = item.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = item.title;
+
+        li.appendChild(a);
+        listEl.appendChild(li);
+      });
+
+      document.getElementById("last-updated").textContent =
+        "Updated: " + new Date().toLocaleString();
+    })
+    .catch(err => {
+      console.error("Error loading sheet:", err);
+      document.getElementById("headline-list").innerHTML =
+        "<li>Unable to load headlines.</li>";
+    });
+</script>
 
   <div class="footer">
     Built to track contraband enforcement actions.
