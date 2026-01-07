@@ -103,7 +103,7 @@ ul {
   font-weight:900;
   letter-spacing:1px;
   text-transform:uppercase;
-  color:var(--muted);
+  color:#000;
 }
 
 /* =========================
@@ -262,16 +262,27 @@ a:hover{
 
       // Sort by State A-Z, then Title A-Z
       entries.sort((a, b) => {
-        const sa = normalizeState(a.state).toLowerCase();
-        const sb = normalizeState(b.state).toLowerCase();
-        if (sa < sb) return -1;
-        if (sa > sb) return 1;
+  const sa = normalizeState(a.state);
+  const sb = normalizeState(b.state);
 
-        const ta = a.title.toLowerCase();
-        const tb = b.title.toLowerCase();
-        if (ta < tb) return -1;
-        if (ta > tb) return 1;
-        return 0;
+  // Force "National" to the top
+  if (sa === "National" && sb !== "National") return -1;
+  if (sb === "National" && sa !== "National") return 1;
+
+  // Alphabetical by state
+  const saLower = sa.toLowerCase();
+  const sbLower = sb.toLowerCase();
+  if (saLower < sbLower) return -1;
+  if (saLower > sbLower) return 1;
+
+  // Alphabetical by title within state
+  const ta = a.title.toLowerCase();
+  const tb = b.title.toLowerCase();
+  if (ta < tb) return -1;
+  if (ta > tb) return 1;
+  return 0;
+});
+
       });
 
       const listEl = document.getElementById("headline-list");
