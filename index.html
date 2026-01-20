@@ -3,226 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <title>Black Market Brief</title>
+
+  <!-- Favicons -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
-   :root{
-  --blue:#1b4cff;
-  --red:#d61f2c;
-  --muted:#333;
-  --thin:#e9e9e9;
-}
+    :root{
+      --blue:#1b4cff;
+      --red:#d61f2c;
+      --muted:#333;
+      --thin:#e9e9e9;
+    }
 
-.stats-bar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:14px;
-  margin:14px 0 22px;
-  padding:12px 14px;
-  border:1px solid var(--thin);
-  background:#fafafa;
-  font-size:13px;
-}
+    body{
+      background:#fff;
+      color:#000;
+      font-family:Arial, Helvetica, sans-serif;
+      margin:0;
+      padding:14px 12px;
+      max-width:900px;
+      margin-left:auto;
+      margin-right:auto;
+      -webkit-text-size-adjust:100%;
+    }
 
-.stat{
-  font-weight:900;
-  white-space:nowrap;
-}
-    
-/* =========================
-   Base / Mobile-first
-   ========================= */
+    h1{
+      text-align:center;
+      font-size:42px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:3px;
+      font-style:italic;
+      transform:skew(-8deg);
+      margin:8px 0;
+      text-shadow:
+        2px 2px 0 var(--blue),
+        4px 4px 0 var(--red),
+        6px 6px 0 rgba(0,0,0,0.18);
+    }
 
-body {
-  background:#fff;
-  color:#000;
-  font-family: Arial, Helvetica, sans-serif;
-  margin:0;
-  padding:14px 12px;
-  max-width:900px;
-  margin-left:auto;
-  margin-right:auto;
-  -webkit-text-size-adjust:100%;
-}
+    .subhead{
+      text-align:center;
+      font-size:13px;
+      font-weight:800;
+      margin:0 0 12px;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+    }
 
-/* =========================
-   Masthead
-   ========================= */
+    .meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:12px;
+      margin:8px 0 12px;
+      flex-wrap:wrap;
+    }
 
-h1 {
-  text-align:center;
-  font-size:42px;
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:3px;
-  font-style:italic;
-  transform:skew(-8deg);
-  margin:8px 0 8px;
-  text-shadow:
-    2px 2px 0 var(--blue),
-    4px 4px 0 var(--red),
-    6px 6px 0 rgba(0,0,0,0.18);
-}
+    .pill{
+      border:1px solid var(--thin);
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:800;
+      text-transform:uppercase;
+      background:#fafafa;
+    }
 
-.subhead {
-  text-align:center;
-  font-size:13px;
-  font-weight:800;
-  margin:0 0 12px;
-  letter-spacing:0.8px;
-  text-transform:uppercase;
-  color:#111;
-}
+    /* Stats bar */
+    .stats-bar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin:14px 0 22px;
+      padding:12px 14px;
+      border:1px solid var(--thin);
+      background:#fafafa;
+      font-size:13px;
+    }
 
-/* =========================
-   Meta row
-   ========================= */
+    .stat{
+      font-weight:900;
+      white-space:nowrap;
+    }
 
-.meta {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  font-size:12px;
-  color:var(--muted);
-  margin:8px 0 14px;
-  flex-wrap:wrap;
-}
+    ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
 
-<div id="stats-bar" class="stats-bar">
-  <div class="stat">Loading totals…</div>
-</div>
-    
-.pill {
-  border:1px solid var(--thin);
-  padding:6px 10px;
-  border-radius:999px;
-  font-weight:800;
-  letter-spacing:0.4px;
-  text-transform:uppercase;
-  background:#fafafa;
-}
+    .state-header{
+      margin:20px 0 6px;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
 
-/* =========================
-   List reset
-   ========================= */
+    .headline-item{
+      margin:0 0 14px;
+      padding-left:14px;
+      font-size:17px;
+      line-height:1.25;
+      position:relative;
+    }
 
-ul {
-  list-style:none;
-  padding:0;
-  margin:0;
-}
+    .headline-item::before{
+      content:"–";
+      position:absolute;
+      left:0;
+      color:#999;
+      font-weight:900;
+    }
 
-/* =========================
-   State headers
-   ========================= */
+    a{
+      color:#000;
+      text-decoration:underline;
+      font-weight:900;
+      word-break:break-word;
+    }
 
-.state-header{
-  margin:20px 0 6px;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  color:#000;
-}
+    a:hover{ color:#0033cc; }
 
-/* =========================
-   Headline entries (indented)
-   ========================= */
+    .footer{
+      text-align:center;
+      margin-top:26px;
+      font-size:13px;
+      color:var(--muted);
+    }
 
-.headline-item{
-  margin:0 0 14px;
-  padding-left:14px;
-  font-size:17px;
-  line-height:1.25;
-  position:relative;
-}
-
-/* subtle visual cue (not a divider) */
-.headline-item::before{
-  content:"–";
-  position:absolute;
-  left:0;
-  top:0;
-  color:#999;
-  font-weight:900;
-}
-
-a{
-  color:#000;
-  text-decoration:underline;
-  font-weight:900;
-  word-break:break-word;
-}
-
-a:hover{
-  color:#0033cc;
-}
-
-/* =========================
-   Footer
-   ========================= */
-
-.footer{
-  text-align:center;
-  margin-top:26px;
-  font-size:13px;
-  color:var(--muted);
-}
-
-.footer a{
-  color:#0040ff;
-  text-decoration:underline;
-  font-weight:800;
-}
-
-.footer a:hover{
-  color:#cc0000;
-}
-
-/* =========================
-   Tablet / Desktop
-   ========================= */
-
-@media (min-width:700px){
-  body{
-    padding:20px;
-  }
-
-  h1{
-    font-size:54px;
-    letter-spacing:4px;
-    margin:10px 0 10px;
-  }
-
-  .subhead{
-    font-size:16px;
-    margin-bottom:18px;
-  }
-
-  .meta{
-    font-size:13px;
-    margin-bottom:16px;
-    flex-wrap:nowrap;
-  }
-
-  .state-header{
-    margin-top:22px;
-    font-size:14px;
-  }
-
-  .headline-item{
-    padding-left:18px;
-    font-size:18px;
-    line-height:1.3;
-    margin-bottom:12px;
-  }
-}
-
+    @media (min-width:700px){
+      body{ padding:20px; }
+      h1{ font-size:54px; }
+      .subhead{ font-size:16px; }
+      .headline-item{ font-size:18px; }
+    }
   </style>
 </head>
 
@@ -235,156 +155,102 @@ a:hover{
     <div id="last-updated">Updated: —</div>
   </div>
 
+  <!-- Stats bar -->
+  <div id="stats-bar" class="stats-bar">
+    <div class="stat">Loading totals…</div>
+  </div>
+
+  <!-- Headlines -->
   <ul id="headline-list">
     <li>Loading headlines…</li>
   </ul>
 
   <script>
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?output=tsv";
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?output=tsv";
+    const STATS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?gid=1186883001&single=true&output=tsv";
+    const SUMMARY_ROW_INDEX = 180;
 
-  function splitTSVLine(line) {
-    // Basic TSV split + trim + remove wrapping quotes
-    return line.split("\t").map(v => (v || "").trim().replace(/^"|"$/g, ""));
-  }
-
-  function parseTSV(text) {
-    const lines = text.trim().split(/\r?\n/);
-    if (lines.length <= 1) return [];
-
-    const headers = splitTSVLine(lines[0]).map(h => h.toLowerCase());
-
-    // Find columns by header name (robust even if you rearrange sheet columns)
-    const idxTitle = headers.findIndex(h => h === "article title" || h === "title");
-    const idxLink  = headers.findIndex(h => h === "link" || h === "url");
-    const idxState = headers.findIndex(h => h === "state");
-
-    if (idxTitle === -1 || idxLink === -1) {
-      console.error("Missing required columns. Need 'Article Title' and 'Link'. Headers:", headers);
-      return [];
+    function splitTSV(line){
+      return line.split("\t").map(v => (v||"").trim().replace(/^"|"$/g,""));
     }
 
-    return lines.slice(1).map(line => {
-      const cols = splitTSVLine(line);
-      const title = cols[idxTitle] || "";
-      const url   = cols[idxLink]  || "";
-      const state = (idxState !== -1 ? (cols[idxState] || "") : "");
+    function parseTSV(text){
+      const lines = text.trim().split(/\r?\n/);
+      const headers = splitTSV(lines[0]).map(h => h.toLowerCase());
+      const t = headers.indexOf("article title");
+      const l = headers.indexOf("link");
+      const s = headers.indexOf("state");
 
-      return { title, url, state };
-    }).filter(r => r.title && r.url);
-  }
+      return lines.slice(1).map(r => {
+        const c = splitTSV(r);
+        return { title:c[t], url:c[l], state:c[s]||"Unknown" };
+      }).filter(x => x.title && x.url);
+    }
 
-  function normalizeState(state) {
-    // Keep it simple; treat blanks as "Unknown"
-    const s = (state || "").trim();
-    return s ? s : "Unknown";
-  }
+    function normalizeState(s){
+      return (s||"Unknown").trim() || "Unknown";
+    }
 
-<script>
-  const STATS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?gid=1186883001&single=true&output=tsv";
-  const SUMMARY_ROW_INDEX = 180; // adjust if needed
-
-  function loadStatsRow() {
+    /* Load stats */
     fetch(STATS_URL)
-      .then(res => res.text())
-      .then(text => {
-        const lines = text.trim().split(/\r?\n/);
-        const row = lines[SUMMARY_ROW_INDEX];
-        if (!row) throw new Error("Stats row not found");
-
-        const cells = row
-          .split("\t")
-          .map(v => v.replace(/^"|"$/g, "").trim())
-          .filter(v => v.length > 0);
-
-        const statsBar = document.getElementById("stats-bar");
-        statsBar.innerHTML = "";
-
-        cells.forEach(cellText => {
-          const div = document.createElement("div");
-          div.className = "stat";
-          div.textContent = cellText;
-          statsBar.appendChild(div);
+      .then(r=>r.text())
+      .then(t=>{
+        const row = t.trim().split(/\r?\n/)[SUMMARY_ROW_INDEX];
+        if(!row) return;
+        const stats = splitTSV(row).filter(Boolean);
+        const bar = document.getElementById("stats-bar");
+        bar.innerHTML="";
+        stats.forEach(txt=>{
+          const d=document.createElement("div");
+          d.className="stat";
+          d.textContent=txt;
+          bar.appendChild(d);
         });
+      });
+
+    /* Load headlines */
+    fetch(SHEET_URL)
+      .then(r=>r.text())
+      .then(t=>{
+        const entries=parseTSV(t).slice(0,500);
+        entries.sort((a,b)=>{
+          const sa=normalizeState(a.state), sb=normalizeState(b.state);
+          if(sa==="National"&&sb!=="National")return-1;
+          if(sb==="National"&&sa!=="National")return 1;
+          if(sa!==sb)return sa.localeCompare(sb);
+          return a.title.localeCompare(b.title);
+        });
+
+        const list=document.getElementById("headline-list");
+        list.innerHTML="";
+        let cur=null;
+
+        entries.forEach(e=>{
+          const st=normalizeState(e.state);
+          if(st!==cur){
+            cur=st;
+            const h=document.createElement("li");
+            h.className="state-header";
+            h.textContent=st;
+            list.appendChild(h);
+          }
+          const li=document.createElement("li");
+          li.className="headline-item";
+          const a=document.createElement("a");
+          a.href=e.url; a.target="_blank"; a.rel="noopener noreferrer";
+          a.textContent=e.title;
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+
+        document.getElementById("last-updated").textContent =
+          "Updated: " + new Date().toLocaleString();
       })
-      .catch(err => {
-        console.error("Stats load failed:", err);
-        document.getElementById("stats-bar").innerHTML =
-          "<div class='stat'>Summary stats unavailable</div>";
+      .catch(()=>{
+        document.getElementById("headline-list").innerHTML =
+          "<li>Unable to load headlines.</li>";
       });
-  }
-
-  loadStatsRow();
-</script>
-
-    
-  fetch(SHEET_URL)
-    .then(res => res.text())
-    .then(text => {
-      let entries = parseTSV(text).slice(0, 500); // raise cap if you want more
-
-      // Sort by State A-Z, then Title A-Z
-      entries.sort((a, b) => {
-  const sa = normalizeState(a.state);
-  const sb = normalizeState(b.state);
-
-  // Force "National" to the top
-  if (sa === "National" && sb !== "National") return -1;
-  if (sb === "National" && sa !== "National") return 1;
-
-  // Alphabetical by state
-  const saLower = sa.toLowerCase();
-  const sbLower = sb.toLowerCase();
-  if (saLower < sbLower) return -1;
-  if (saLower > sbLower) return 1;
-
-  // Alphabetical by title within state
-  const ta = a.title.toLowerCase();
-  const tb = b.title.toLowerCase();
-  if (ta < tb) return -1;
-  if (ta > tb) return 1;
-  return 0;
-});
-
-      const listEl = document.getElementById("headline-list");
-      listEl.innerHTML = "";
-
-      // Grouped rendering by state
-      let currentState = null;
-
-      entries.forEach(item => {
-        const state = normalizeState(item.state);
-
-        if (state !== currentState) {
-          currentState = state;
-
-          const headerLi = document.createElement("li");
-          headerLi.className = "state-header";
-          headerLi.textContent = currentState;
-          listEl.appendChild(headerLi);
-        }
-
-        const li = document.createElement("li");
-        li.className = "headline-item";
-
-        const a = document.createElement("a");
-        a.href = item.url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.textContent = item.title;
-
-        li.appendChild(a);
-        listEl.appendChild(li);
-      });
-
-      document.getElementById("last-updated").textContent =
-        "Updated: " + new Date().toLocaleString();
-    })
-    .catch(err => {
-      console.error("Error loading sheet:", err);
-      document.getElementById("headline-list").innerHTML =
-        "<li>Unable to load headlines.</li>";
-    });
-</script>
+  </script>
 
   <div class="footer">
     Built to track contraband enforcement actions.
