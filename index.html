@@ -63,6 +63,7 @@
       font-size:12px;
       margin:8px 0 12px;
       flex-wrap:wrap;
+      gap:8px;
     }
 
     .pill{
@@ -75,27 +76,27 @@
     }
 
     /* =========================
-       Auto-scroll stats banner
+       MOBILE-SAFE STATS TICKER
        ========================= */
 
     .stats-bar{
-      position:relative;
-      overflow:hidden;
       border:1px solid var(--thin);
       background:#fafafa;
       margin:14px 0 22px;
-      padding:10px 0;
+      overflow:hidden;
+    }
+
+    .stats-mask{
+      width:100%;
+      overflow:hidden;
     }
 
     .stats-track{
-      display:inline-flex;
+      display:flex;
       gap:28px;
-      padding-left:100%;
-      animation:stats-scroll 45s linear infinite;
-    }
-
-    .stats-bar:hover .stats-track{
-      animation-play-state:paused;
+      padding:10px 0;
+      will-change:transform;
+      animation:stats-scroll 30s linear infinite;
     }
 
     .stat{
@@ -105,19 +106,24 @@
     }
 
     @keyframes stats-scroll{
-      from{ transform:translateX(0); }
+      from{ transform:translateX(100%); }
       to{ transform:translateX(-100%); }
+    }
+
+    @media (hover:hover){
+      .stats-bar:hover .stats-track{
+        animation-play-state:paused;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
       .stats-track{
         animation:none;
-        padding-left:0;
       }
     }
 
     /* =========================
-       Headlines
+       HEADLINES
        ========================= */
 
     ul{
@@ -176,18 +182,23 @@
 </head>
 
 <body>
+
   <h1>BLACK MARKET BRIEF</h1>
-  <div class="subhead">Disrupting the Illegal Chinese Vape Supply Chain • Protecting Communities</div>
+  <div class="subhead">
+    Disrupting the Illegal Chinese Vape Supply Chain • Protecting Communities
+  </div>
 
   <div class="meta">
     <div class="pill">Live Desk</div>
     <div id="last-updated">Updated: —</div>
   </div>
 
-  <!-- Stats ticker -->
-  <div id="stats-bar" class="stats-bar">
-    <div id="stats-track" class="stats-track">
-      <div class="stat">Loading totals…</div>
+  <!-- Stats Ticker -->
+  <div class="stats-bar">
+    <div class="stats-mask">
+      <div id="stats-track" class="stats-track">
+        <div class="stat">Loading totals…</div>
+      </div>
     </div>
   </div>
 
@@ -246,19 +257,25 @@
       .then(r => r.text())
       .then(t => {
         const lines = t.trim().split(/\r?\n/);
-        const row = lines[0]; // FIRST ROW
+        const row = lines[0];
         if (!row) return;
 
         const stats = splitTSV(row).filter(Boolean);
         const track = document.getElementById("stats-track");
         track.innerHTML = "";
 
-        [...stats, ...stats].forEach(txt => {
+        const doubled = stats.concat(stats);
+        doubled.forEach(txt => {
           const d = document.createElement("div");
           d.className = "stat";
           d.textContent = txt;
           track.appendChild(d);
         });
+
+        /* Force iOS Safari reflow */
+        track.style.animation = "none";
+        track.offsetHeight;
+        track.style.animation = "";
       });
 
     /* =========================
@@ -273,7 +290,6 @@
         entries.sort((a, b) => {
           const sa = normalizeState(a.state);
           const sb = normalizeState(b.state);
-
           if (sa === "National" && sb !== "National") return -1;
           if (sb === "National" && sa !== "National") return 1;
           if (sa !== sb) return sa.localeCompare(sb);
@@ -318,5 +334,6 @@
   <div class="footer">
     Built to track contraband enforcement actions.
   </div>
+
 </body>
 </html>
