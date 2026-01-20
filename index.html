@@ -1,40 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>Black Market Brief</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <style>
 :root{
   --blue:#1b4cff;
   --red:#d61f2c;
   --thin:#e9e9e9;
-  --muted:#444;
 }
-
-/* =========================
-   BASE
-   ========================= */
 
 body{
   font-family:Arial, Helvetica, sans-serif;
   margin:0;
   padding:14px;
-  max-width:1100px;
+  max-width:1200px;
   margin-inline:auto;
-  background:#fff;
 }
 
 h1{
   text-align:center;
-  font-size:42px;
+  font-size:48px;
   font-weight:900;
   font-style:italic;
   letter-spacing:3px;
   transform:skew(-8deg);
-  margin:10px 0;
+  margin:8px 0;
   text-shadow:
     2px 2px 0 var(--blue),
     4px 4px 0 var(--red);
@@ -42,8 +36,8 @@ h1{
 
 .subhead{
   text-align:center;
+  font-size:14px;
   font-weight:800;
-  font-size:13px;
   text-transform:uppercase;
   margin-bottom:12px;
 }
@@ -53,9 +47,7 @@ h1{
   justify-content:space-between;
   align-items:center;
   font-size:12px;
-  margin-bottom:16px;
-  flex-wrap:wrap;
-  gap:8px;
+  margin-bottom:14px;
 }
 
 .pill{
@@ -63,120 +55,97 @@ h1{
   padding:6px 10px;
   border-radius:999px;
   font-weight:800;
-  text-transform:uppercase;
-  background:#fafafa;
 }
 
-/* =========================
-   PAGE GRID (KEY FIX)
-   ========================= */
+/* ===== LAYOUT ===== */
 
-.page-grid{
+.main{
   display:grid;
-  grid-template-columns:1fr;
-  gap:24px;
+  grid-template-columns: 1fr 340px;
+  gap:28px;
 }
 
-/* Desktop: headlines + clock */
-@media (min-width:900px){
-  .page-grid{
-    grid-template-columns:1fr 360px;
-    align-items:start;
+@media(max-width:900px){
+  .main{
+    grid-template-columns:1fr;
   }
 }
 
-/* =========================
-   SEIZURE CLOCK
-   ========================= */
+/* ===== SCOREBOARD ===== */
 
-.seizure-clock{
+.scoreboard{
   border:1px solid var(--thin);
-  background:#fafafa;
-  padding:16px;
+  padding:14px;
 }
 
-.clock-title{
-  font-weight:900;
-  font-size:14px;
-  letter-spacing:1px;
+.scoreboard h3{
+  margin:0 0 10px;
+  font-size:13px;
   text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.stat{
   margin-bottom:14px;
 }
 
-/* Grid of tiles */
-.clock-grid{
-  display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:12px;
+.digits{
+  display:flex;
+  gap:3px;
+  margin-bottom:6px;
 }
 
-.clock-tile{
-  background:#fff;
-  border:1px solid var(--thin);
-  padding:10px 8px;
-  text-align:center;
-  perspective:600px;
-}
-
-.clock-number{
-  font-family: "Courier New", monospace;
+.digit{
+  background:#000;
+  color:#fff;
+  width:28px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-weight:900;
-  font-size:18px;
-  display:block;
-  transform-origin:top;
-  animation:flipIn 0.6s ease-out both;
+  font-size:20px;
+  border-radius:2px;
+  animation:flipIn 0.6s ease both;
 }
 
-.clock-label{
-  font-size:11px;
-  font-weight:800;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-top:4px;
-}
-
-/* Flip animation */
 @keyframes flipIn{
   from{
-    transform:rotateX(-90deg);
+    transform:rotateX(90deg);
     opacity:0;
   }
   to{
-    transform:rotateX(0deg);
+    transform:rotateX(0);
     opacity:1;
   }
 }
 
-/* =========================
-   HEADLINES
-   ========================= */
-
-ul{
-  list-style:none;
-  padding:0;
-  margin:0;
+.desc{
+  font-size:12px;
+  font-weight:700;
 }
 
-.state-header{
+/* ===== HEADLINES ===== */
+
+ul{ list-style:none; padding:0; margin:0; }
+
+.state{
   margin-top:18px;
-  font-weight:900;
   font-size:13px;
-  letter-spacing:1px;
+  font-weight:900;
   text-transform:uppercase;
 }
 
-.headline-item{
-  margin:10px 0;
+.item{
+  margin:8px 0;
   padding-left:14px;
   position:relative;
 }
 
-.headline-item::before{
+.item::before{
   content:"–";
   position:absolute;
   left:0;
-  color:#999;
-  font-weight:900;
 }
 
 a{
@@ -187,9 +156,8 @@ a{
 
 .footer{
   text-align:center;
+  margin-top:24px;
   font-size:13px;
-  color:#666;
-  margin-top:40px;
 }
 </style>
 </head>
@@ -197,106 +165,122 @@ a{
 <body>
 
 <h1>BLACK MARKET BRIEF</h1>
-<div class="subhead">
-  Disrupting the Illegal Chinese Vape Supply Chain • Protecting Communities
-</div>
+<div class="subhead">Disrupting the Illegal Chinese Vape Supply Chain • Protecting Communities</div>
 
 <div class="meta">
   <div class="pill">Live Desk</div>
-  <div id="last-updated">Updated —</div>
+  <div id="updated">Updated —</div>
 </div>
 
-<div class="page-grid">
+<div class="main">
 
-  <!-- HEADLINES COLUMN -->
+  <!-- HEADLINES -->
   <div>
-    <ul id="headline-list">
+    <ul id="headlines">
       <li>Loading headlines…</li>
     </ul>
   </div>
 
-  <!-- CLOCK COLUMN -->
-  <div class="seizure-clock">
-    <div id="clock-title" class="clock-title">Loading totals…</div>
-    <div id="clock-grid" class="clock-grid"></div>
-  </div>
+  <!-- SCOREBOARD -->
+  <aside class="scoreboard">
+    <h3 id="stats-title">Loading…</h3>
+    <div id="stats"></div>
+  </aside>
 
 </div>
 
+<div class="footer">
+  Built to track contraband enforcement actions.
+</div>
+
 <script>
+/* ===== URLs ===== */
 const HEADLINES_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?gid=1559123090&single=true&output=tsv";
 
 const STATS_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?gid=1186883001&single=true&output=tsv";
 
-function splitTSV(l){ return l.split("\t").map(v=>v.trim()); }
+/* ===== HELPERS ===== */
+const split = l => l.split("\t").map(v => v.replace(/^"|"$/g,"").trim());
 
-/* Load clock */
+/* ===== LOAD STATS ===== */
 fetch(STATS_URL).then(r=>r.text()).then(t=>{
-  const row = splitTSV(t.split("\n")[0]);
-  document.getElementById("clock-title").textContent = row[0];
+  const row = split(t.trim().split("\n")[0]);
+  document.getElementById("stats-title").textContent = row[0];
 
-  const labels = [
-    "Product Value",
-    "Illegal Vapes",
-    "Black Market Drugs",
-    "High-Risk Grey Zone",
-    "Psychedelics",
-    "Firearms",
-    "Cash Seized"
-  ];
+  const container = document.getElementById("stats");
+  row.slice(5,12).forEach(text=>{
+    const num = text.match(/^[^a-zA-Z]+/)[0];
+    const label = text.replace(num,"").trim();
 
-  const values = row.slice(5,12);
-  const grid = document.getElementById("clock-grid");
+    const stat = document.createElement("div");
+    stat.className="stat";
 
-  values.forEach((v,i)=>{
-    const tile=document.createElement("div");
-    tile.className="clock-tile";
-    tile.innerHTML = `
-      <span class="clock-number">${v}</span>
-      <div class="clock-label">${labels[i]}</div>
-    `;
-    grid.appendChild(tile);
+    const digits = document.createElement("div");
+    digits.className="digits";
+
+    num.replace(/[^0-9]/g,"").split("").forEach((d,i)=>{
+      const el = document.createElement("div");
+      el.className="digit";
+      el.style.animationDelay = `${i*0.05}s`;
+      el.textContent=d;
+      digits.appendChild(el);
+    });
+
+    stat.appendChild(digits);
+
+    const desc = document.createElement("div");
+    desc.className="desc";
+    desc.textContent = label;
+
+    stat.appendChild(desc);
+    container.appendChild(stat);
   });
 });
 
-/* Load headlines */
+/* ===== LOAD HEADLINES ===== */
 fetch(HEADLINES_URL).then(r=>r.text()).then(t=>{
-  const lines=t.trim().split("\n");
-  const h=splitTSV(lines[0]).map(x=>x.toLowerCase());
-  const ti=h.indexOf("article title");
-  const li=h.indexOf("link");
-  const si=h.indexOf("state");
+  const lines = t.trim().split("\n");
+  const h = split(lines[0]).map(x=>x.toLowerCase());
+  const iTitle=h.indexOf("article title");
+  const iLink=h.indexOf("link");
+  const iState=h.indexOf("state");
 
-  const list=document.getElementById("headline-list");
-  list.innerHTML="";
-  let cur=null;
+  const data = lines.slice(1).map(l=>{
+    const c=split(l);
+    return {title:c[iTitle],url:c[iLink],state:c[iState]};
+  }).filter(x=>x.title&&x.url);
 
-  lines.slice(1).forEach(l=>{
-    const c=splitTSV(l);
-    const s=c[si]||"Unknown";
-    if(s!==cur){
-      cur=s;
-      const sh=document.createElement("li");
-      sh.className="state-header";
-      sh.textContent=s;
-      list.appendChild(sh);
-    }
-    const it=document.createElement("li");
-    it.className="headline-item";
-    it.innerHTML=`<a href="${c[li]}" target="_blank">${c[ti]}</a>`;
-    list.appendChild(it);
+  data.sort((a,b)=>{
+    if(a.state==="National") return -1;
+    if(b.state==="National") return 1;
+    if(a.state!==b.state) return a.state.localeCompare(b.state);
+    return a.title.localeCompare(b.title);
   });
 
-  document.getElementById("last-updated").textContent =
+  const ul=document.getElementById("headlines");
+  ul.innerHTML="";
+  let cur=null;
+
+  data.forEach(x=>{
+    if(x.state!==cur){
+      cur=x.state;
+      const s=document.createElement("li");
+      s.className="state";
+      s.textContent=cur;
+      ul.appendChild(s);
+    }
+    const li=document.createElement("li");
+    li.className="item";
+    li.innerHTML=`<a href="${x.url}" target="_blank">${x.title}</a>`;
+    ul.appendChild(li);
+  });
+
+  document.getElementById("updated").textContent =
     "Updated: " + new Date().toLocaleString();
 });
 </script>
-
-<div class="footer">
-  Built to track contraband enforcement actions.
-</div>
 
 </body>
 </html>
