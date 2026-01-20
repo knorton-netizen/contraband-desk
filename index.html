@@ -1,284 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Black Market Brief</title>
+  <meta charset="UTF-8" />
+  <title>Black Market Brief</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<style>
-:root{
-  --blue:#1b4cff;
-  --red:#d61f2c;
-  --thin:#e9e9e9;
-}
+  <style>
+    :root{
+      --blue:#1b4cff;
+      --red:#d61f2c;
+      --thin:#e9e9e9;
+    }
 
-body{
-  font-family:Arial, Helvetica, sans-serif;
-  margin:0;
-  padding:14px;
-  max-width:1200px;
-  margin-inline:auto;
-}
+    body{
+      margin:0;
+      padding:14px 12px;
+      font-family:Arial, Helvetica, sans-serif;
+      max-width:1100px;
+      margin-inline:auto;
+      background:#fff;
+      color:#000;
+    }
 
-h1{
-  text-align:center;
-  font-size:48px;
-  font-weight:900;
-  font-style:italic;
-  letter-spacing:3px;
-  transform:skew(-8deg);
-  margin:8px 0;
-  text-shadow:
-    2px 2px 0 var(--blue),
-    4px 4px 0 var(--red);
-}
+    h1{
+      text-align:center;
+      font-size:42px;
+      font-weight:900;
+      letter-spacing:3px;
+      font-style:italic;
+      transform:skew(-8deg);
+      margin:8px 0;
+      text-shadow:
+        2px 2px 0 var(--blue),
+        4px 4px 0 var(--red);
+    }
 
-.subhead{
-  text-align:center;
-  font-size:14px;
-  font-weight:800;
-  text-transform:uppercase;
-  margin-bottom:12px;
-}
+    .subhead{
+      text-align:center;
+      font-size:13px;
+      font-weight:800;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
 
-.meta{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:12px;
-  margin-bottom:14px;
-}
+    .meta{
+      display:flex;
+      justify-content:space-between;
+      font-size:12px;
+      margin-bottom:16px;
+    }
 
-.pill{
-  border:1px solid var(--thin);
-  padding:6px 10px;
-  border-radius:999px;
-  font-weight:800;
-}
+    .pill{
+      border:1px solid var(--thin);
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:800;
+      background:#fafafa;
+    }
 
-/* ===== LAYOUT ===== */
+    /* ===== LAYOUT ===== */
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:26px;
+      align-items:start;
+    }
 
-.main{
-  display:grid;
-  grid-template-columns: 1fr 340px;
-  gap:28px;
-}
+    @media (max-width: 850px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
 
-@media(max-width:900px){
-  .main{
-    grid-template-columns:1fr;
-  }
-}
+    /* ===== SCOREBOARD ===== */
+    .scoreboard{
+      border:1px solid var(--thin);
+      padding:16px;
+      background:#fafafa;
+    }
 
-/* ===== SCOREBOARD ===== */
+    .scoreboard h3{
+      margin:0 0 14px;
+      font-size:13px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
 
-.scoreboard{
-  border:1px solid var(--thin);
-  padding:14px;
-}
+    .metric{
+      margin-bottom:16px;
+    }
 
-.scoreboard h3{
-  margin:0 0 10px;
-  font-size:13px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
+    .digits{
+      display:flex;
+      gap:4px;
+      margin-bottom:6px;
+      flex-wrap:wrap;
+    }
 
-.stat{
-  margin-bottom:14px;
-}
+    .digit{
+      width:32px;
+      height:44px;
+      background:#000;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:20px;
+      border-radius:3px;
+    }
 
-.digits{
-  display:flex;
-  gap:3px;
-  margin-bottom:6px;
-}
+    .label{
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      color:#333;
+    }
 
-.digit{
-  background:#000;
-  color:#fff;
-  width:28px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  font-size:20px;
-  border-radius:2px;
-  animation:flipIn 0.6s ease both;
-}
+    /* ===== HEADLINES ===== */
+    ul{ list-style:none; padding:0; margin:0; }
 
-@keyframes flipIn{
-  from{
-    transform:rotateX(90deg);
-    opacity:0;
-  }
-  to{
-    transform:rotateX(0);
-    opacity:1;
-  }
-}
+    .state-header{
+      margin:20px 0 6px;
+      font-size:13px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
 
-.desc{
-  font-size:12px;
-  font-weight:700;
-}
+    .headline-item{
+      margin-bottom:12px;
+      padding-left:14px;
+      position:relative;
+      font-size:17px;
+      font-weight:900;
+    }
 
-/* ===== HEADLINES ===== */
+    .headline-item::before{
+      content:"–";
+      position:absolute;
+      left:0;
+      color:#999;
+    }
 
-ul{ list-style:none; padding:0; margin:0; }
+    a{ color:#000; text-decoration:underline; }
 
-.state{
-  margin-top:18px;
-  font-size:13px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-
-.item{
-  margin:8px 0;
-  padding-left:14px;
-  position:relative;
-}
-
-.item::before{
-  content:"–";
-  position:absolute;
-  left:0;
-}
-
-a{
-  color:#000;
-  font-weight:900;
-  text-decoration:underline;
-}
-
-.footer{
-  text-align:center;
-  margin-top:24px;
-  font-size:13px;
-}
-</style>
+    .footer{
+      text-align:center;
+      margin-top:26px;
+      font-size:13px;
+      color:#444;
+    }
+  </style>
 </head>
 
 <body>
+  <h1>BLACK MARKET BRIEF</h1>
+  <div class="subhead">Disrupting the Illegal Chinese Vape Supply Chain • Protecting Communities</div>
 
-<h1>BLACK MARKET BRIEF</h1>
-<div class="subhead">Disrupting the Illegal Chinese Vape Supply Chain • Protecting Communities</div>
-
-<div class="meta">
-  <div class="pill">Live Desk</div>
-  <div id="updated">Updated —</div>
-</div>
-
-<div class="main">
-
-  <!-- HEADLINES -->
-  <div>
-    <ul id="headlines">
-      <li>Loading headlines…</li>
-    </ul>
+  <div class="meta">
+    <div class="pill">Live Desk</div>
+    <div id="last-updated">Updated: —</div>
   </div>
 
-  <!-- SCOREBOARD -->
-  <aside class="scoreboard">
-    <h3 id="stats-title">Loading…</h3>
-    <div id="stats"></div>
-  </aside>
+  <div class="layout">
 
-</div>
+    <!-- HEADLINES -->
+    <div>
+      <ul id="headline-list">
+        <li>Loading headlines…</li>
+      </ul>
+    </div>
 
-<div class="footer">
-  Built to track contraband enforcement actions.
-</div>
+    <!-- SCOREBOARD -->
+    <div class="scoreboard" id="scoreboard">
+      <h3 id="scoreboard-title">Reported Seizures Since Jan 2025:</h3>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Built to track contraband enforcement actions.
+  </div>
 
 <script>
-/* ===== URLs ===== */
+/* ================= DATA ================= */
+
 const HEADLINES_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?gid=1559123090&single=true&output=tsv";
 
 const STATS_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?gid=1186883001&single=true&output=tsv";
 
-/* ===== HELPERS ===== */
-const split = l => l.split("\t").map(v => v.replace(/^"|"$/g,"").trim());
+const LABELS = [
+  "in product value",
+  "illegal vapes",
+  "pounds of black market drugs and synthetics",
+  "pounds of high-risk grey zone drugs",
+  "grams of psychedelics",
+  "firearms",
+  "in cash",
+  "arrests"
+];
 
-/* ===== LOAD STATS ===== */
-fetch(STATS_URL).then(r=>r.text()).then(t=>{
-  const row = split(t.trim().split("\n")[0]);
-  document.getElementById("stats-title").textContent = row[0];
+/* ================= HELPERS ================= */
 
-  const container = document.getElementById("stats");
-  row.slice(5,12).forEach(text=>{
-    const num = text.match(/^[^a-zA-Z]+/)[0];
-    const label = text.replace(num,"").trim();
+function splitTSV(l){ return l.split("\t").map(v=>v.trim()); }
 
-    const stat = document.createElement("div");
-    stat.className="stat";
+function formatNumber(n){
+  return n.toLocaleString("en-US");
+}
 
-    const digits = document.createElement("div");
+function animateDigits(container, finalStr){
+  container.innerHTML="";
+  [...finalStr].forEach(char=>{
+    if(char === "," || char === "." || char === "$"){
+      const span=document.createElement("span");
+      span.textContent=char;
+      span.style.fontWeight="900";
+      span.style.fontSize="20px";
+      span.style.margin="0 2px";
+      container.appendChild(span);
+      return;
+    }
+    const d=document.createElement("div");
+    d.className="digit";
+    container.appendChild(d);
+    let current=0;
+    const target=parseInt(char,10);
+    const interval=setInterval(()=>{
+      d.textContent=current;
+      if(current===target){
+        clearInterval(interval);
+      }
+      current=(current+1)%10;
+    },30);
+  });
+}
+
+/* ================= SCOREBOARD ================= */
+
+fetch(STATS_URL)
+.then(r=>r.text())
+.then(t=>{
+  const row=splitTSV(t.split(/\r?\n/)[0]);
+  document.getElementById("scoreboard-title").textContent=row[0];
+
+  const values=[row[5],row[6],row[7],row[8],row[9],row[10],row[11],row[12]];
+  const board=document.getElementById("scoreboard");
+
+  values.forEach((val,i)=>{
+    if(!val) return;
+    const num=parseFloat(val.replace(/[^0-9.]/g,""));
+    const isDollar = i===0 || i===6;
+    const display=(isDollar?"$":"")+formatNumber(num)+(val.includes("+")?"+":"");
+
+    const metric=document.createElement("div");
+    metric.className="metric";
+
+    const digits=document.createElement("div");
     digits.className="digits";
 
-    num.replace(/[^0-9]/g,"").split("").forEach((d,i)=>{
-      const el = document.createElement("div");
-      el.className="digit";
-      el.style.animationDelay = `${i*0.05}s`;
-      el.textContent=d;
-      digits.appendChild(el);
-    });
+    animateDigits(digits,display);
 
-    stat.appendChild(digits);
+    const label=document.createElement("div");
+    label.className="label";
+    label.textContent=LABELS[i];
 
-    const desc = document.createElement("div");
-    desc.className="desc";
-    desc.textContent = label;
-
-    stat.appendChild(desc);
-    container.appendChild(stat);
+    metric.appendChild(digits);
+    metric.appendChild(label);
+    board.appendChild(metric);
   });
 });
 
-/* ===== LOAD HEADLINES ===== */
-fetch(HEADLINES_URL).then(r=>r.text()).then(t=>{
-  const lines = t.trim().split("\n");
-  const h = split(lines[0]).map(x=>x.toLowerCase());
-  const iTitle=h.indexOf("article title");
-  const iLink=h.indexOf("link");
-  const iState=h.indexOf("state");
+/* ================= HEADLINES ================= */
 
-  const data = lines.slice(1).map(l=>{
-    const c=split(l);
-    return {title:c[iTitle],url:c[iLink],state:c[iState]};
-  }).filter(x=>x.title&&x.url);
+fetch(HEADLINES_URL)
+.then(r=>r.text())
+.then(t=>{
+  const lines=t.trim().split(/\r?\n/);
+  const headers=splitTSV(lines[0]).map(h=>h.toLowerCase());
+  const ti=headers.indexOf("article title");
+  const li=headers.indexOf("link");
+  const si=headers.indexOf("state");
 
-  data.sort((a,b)=>{
+  const entries=lines.slice(1).map(r=>{
+    const c=splitTSV(r);
+    return {title:c[ti],url:c[li],state:c[si]||"Unknown"};
+  }).filter(e=>e.title&&e.url);
+
+  entries.sort((a,b)=>{
     if(a.state==="National") return -1;
     if(b.state==="National") return 1;
-    if(a.state!==b.state) return a.state.localeCompare(b.state);
-    return a.title.localeCompare(b.title);
+    return a.state.localeCompare(b.state)||a.title.localeCompare(b.title);
   });
 
-  const ul=document.getElementById("headlines");
-  ul.innerHTML="";
+  const list=document.getElementById("headline-list");
+  list.innerHTML="";
   let cur=null;
 
-  data.forEach(x=>{
-    if(x.state!==cur){
-      cur=x.state;
-      const s=document.createElement("li");
-      s.className="state";
-      s.textContent=cur;
-      ul.appendChild(s);
+  entries.forEach(e=>{
+    if(e.state!==cur){
+      cur=e.state;
+      const h=document.createElement("li");
+      h.className="state-header";
+      h.textContent=cur;
+      list.appendChild(h);
     }
     const li=document.createElement("li");
-    li.className="item";
-    li.innerHTML=`<a href="${x.url}" target="_blank">${x.title}</a>`;
-    ul.appendChild(li);
+    li.className="headline-item";
+    const a=document.createElement("a");
+    a.href=e.url;
+    a.target="_blank";
+    a.textContent=e.title;
+    li.appendChild(a);
+    list.appendChild(li);
   });
 
-  document.getElementById("updated").textContent =
-    "Updated: " + new Date().toLocaleString();
+  document.getElementById("last-updated").textContent=
+    "Updated: "+new Date().toLocaleString();
 });
 </script>
 
