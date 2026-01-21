@@ -1,139 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>Black Market Brief</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 :root{
   --blue:#1b4cff;
   --red:#d61f2c;
-  --thin:#e9e9e9;
-  --muted:#333;
+  --thin:#e6e6e6;
 }
-
-/* =========================
-   Base
-========================= */
 
 body{
   margin:0;
-  padding:16px 14px;
-  max-width:1100px;
-  margin-left:auto;
-  margin-right:auto;
+  padding:14px 12px;
   font-family:Arial, Helvetica, sans-serif;
-  color:#000;
-  background:#fff;
+  max-width:1200px;
+  margin-inline:auto;
 }
 
 h1{
   text-align:center;
-  font-size:44px;
+  font-size:42px;
   font-weight:900;
   letter-spacing:3px;
-  text-transform:uppercase;
   font-style:italic;
   transform:skew(-8deg);
-  margin:6px 0 8px;
-  text-shadow:
-    2px 2px 0 var(--blue),
-    4px 4px 0 var(--red),
-    6px 6px 0 rgba(0,0,0,.2);
+  margin:8px 0;
+  text-shadow:2px 2px 0 var(--blue),4px 4px 0 var(--red);
 }
 
 .subhead{
   text-align:center;
   font-size:13px;
   font-weight:800;
-  letter-spacing:.8px;
   text-transform:uppercase;
-  margin-bottom:14px;
+  margin-bottom:16px;
 }
 
 .meta{
   display:flex;
   justify-content:space-between;
-  align-items:center;
   font-size:12px;
-  margin-bottom:14px;
-  flex-wrap:wrap;
+  margin-bottom:18px;
 }
 
 .pill{
   border:1px solid var(--thin);
-  border-radius:999px;
   padding:6px 10px;
+  border-radius:999px;
   font-weight:800;
   background:#fafafa;
 }
 
-/* =========================
-   Layout
-========================= */
+/* ===== LAYOUT ===== */
 
 .main{
   display:grid;
-  grid-template-columns:360px 1fr;
+  grid-template-columns: 380px 1fr;
   gap:28px;
+  align-items:start;
 }
 
-@media(max-width:800px){
+@media (max-width:900px){
   .main{
     grid-template-columns:1fr;
   }
 }
 
-/* =========================
-   Stats Box
-========================= */
+/* ===== STATS BOX ===== */
 
 .stats-box{
   border:1px solid var(--thin);
-  padding:14px 16px;
   background:#fafafa;
+  padding:16px;
+  align-self:start; /* prevents any stretching behavior */
 }
 
-.stats-title{
+.stats-box h3{
+  margin:0 0 14px;
   font-size:13px;
   font-weight:900;
-  letter-spacing:1px;
   text-transform:uppercase;
-  margin-bottom:12px;
+  letter-spacing:1px;
 }
 
 .stat-row{
   margin-bottom:14px;
 }
 
-.stat-label{
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.6px;
-  text-transform:uppercase;
-  color:#333;
-  margin-top:4px;
-}
-
-/* =========================
-   Split-flap digits
-========================= */
-
+/* Number line holds tiles + punctuation inline */
 .stat-number{
   display:flex;
   align-items:center;
+  flex-wrap:nowrap;        /* force single line */
+  white-space:nowrap;
   gap:2px;
+  overflow:hidden;         /* keep clean */
 }
 
+/* Punctuation as inline text, not a tile */
+.punct{
+  font-size:18px;
+  font-weight:900;
+  line-height:34px;
+  padding:0 1px;
+}
+
+/* Digit tile */
 .digit{
   width:22px;
   height:34px;
-  perspective:300px;
+  perspective:500px;
 }
 
-.digit-inner{
+/* The “flap card” itself */
+.digit-card{
   width:100%;
   height:100%;
   background:#000;
@@ -143,32 +126,35 @@ h1{
   line-height:34px;
   text-align:center;
   border-radius:3px;
-  animation:flip .25s ease-out;
-  transform-origin:bottom;
+  transform-origin:top;
 }
 
-@keyframes flip{
-  from{ transform:rotateX(90deg); }
-  to{ transform:rotateX(0deg); }
+/* When we toggle this class, it flaps upward */
+.digit-card.flap{
+  animation: flapUp 140ms ease-out;
 }
 
-.punct{
-  font-size:18px;
-  font-weight:900;
-  padding:0 2px;
+@keyframes flapUp{
+  from { transform: rotateX(90deg); }
+  to   { transform: rotateX(0deg); }
 }
 
-/* =========================
-   Headlines
-========================= */
+.stat-label{
+  margin-top:4px;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  color:#333;
+}
 
-ul{ list-style:none; padding:0; margin:0; }
+/* ===== HEADLINES ===== */
+
+ul{list-style:none;padding:0;margin:0;}
 
 .state-header{
-  margin:18px 0 6px;
+  margin:22px 0 6px;
   font-size:13px;
   font-weight:900;
-  letter-spacing:1px;
   text-transform:uppercase;
 }
 
@@ -177,6 +163,7 @@ ul{ list-style:none; padding:0; margin:0; }
   padding-left:14px;
   position:relative;
   font-size:17px;
+  font-weight:900;
 }
 
 .headline-item::before{
@@ -184,22 +171,15 @@ ul{ list-style:none; padding:0; margin:0; }
   position:absolute;
   left:0;
   color:#999;
-  font-weight:900;
 }
 
-a{
-  color:#000;
-  text-decoration:underline;
-  font-weight:900;
-}
-
-a:hover{ color:#0033cc; }
+a{color:#000;text-decoration:underline;}
 
 .footer{
   text-align:center;
-  font-size:13px;
-  color:var(--muted);
   margin-top:26px;
+  font-size:13px;
+  color:#444;
 }
 </style>
 </head>
@@ -217,9 +197,9 @@ a:hover{ color:#0033cc; }
 <div class="main">
 
   <!-- STATS -->
-  <div class="stats-box">
-    <div class="stats-title">Seizures and Arrests Since Jan 2025</div>
-    <div id="stats-box"></div>
+  <div class="stats-box" id="stats-box">
+    <h3>SEIZURES AND ARRESTS SINCE JAN 2025</h3>
+    <div id="stats-rows"></div>
   </div>
 
   <!-- HEADLINES -->
@@ -231,9 +211,7 @@ a:hover{ color:#0033cc; }
 
 </div>
 
-<div class="footer">
-  Built to track contraband enforcement actions.
-</div>
+<div class="footer">Built to track contraband enforcement actions.</div>
 
 <script>
 const STATS_URL =
@@ -242,102 +220,175 @@ const STATS_URL =
 const HEADLINES_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?gid=1559123090&single=true&output=tsv";
 
-const LABELS = [
-  "In product value",
-  "Illegal vapes",
-  "Pounds of black market drugs and synthetics",
-  "Pounds of high-risk grey zone drugs",
-  "Grams of psychedelics",
-  "Firearms",
-  "In cash",
-  "Arrests"
+/*
+F1–M1 mapping must never change (this is what keeps labels aligned):
+F product value
+G illegal vapes
+H black market drugs/synthetics
+I high-risk grey zone drugs
+J psychedelics
+K firearms
+L cash
+M arrests
+*/
+const LABELS=[
+  "in product value",
+  "illegal vapes",
+  "pounds of black market drugs and synthetics",
+  "pounds of high-risk grey zone drugs",
+  "grams of psychedelics",
+  "firearms",
+  "in cash",
+  "arrests"
 ];
 
-function splitTSV(line){
-  return line.split("\t").map(v=>v.trim());
-}
+function splitTSV(line){ return line.split("\t").map(v=>v.trim()); }
 
-function renderFlipNumber(container, text){
-  container.innerHTML="";
-  [...text].forEach(ch=>{
-    if(/\d/.test(ch)){
-      const d=document.createElement("div");
-      d.className="digit";
-      const i=document.createElement("div");
-      i.className="digit-inner";
-      i.textContent=ch;
-      d.appendChild(i);
-      container.appendChild(d);
-    }else{
-      const p=document.createElement("span");
-      p.className="punct";
-      p.textContent=ch;
+/**
+ * Render a number string into:
+ * - digit tiles for digits
+ * - inline punctuation spans for everything else ($ , . +)
+ */
+function renderFlapNumber(container, text){
+  container.innerHTML = "";
+  const digitCards = [];
+
+  for (const ch of text){
+    if (/\d/.test(ch)){
+      const digitWrap = document.createElement("div");
+      digitWrap.className = "digit";
+
+      const card = document.createElement("div");
+      card.className = "digit-card";
+      card.textContent = "0"; // start at 0 visually
+
+      digitWrap.appendChild(card);
+      container.appendChild(digitWrap);
+
+      digitCards.push({ card, target: parseInt(ch,10) });
+    } else {
+      const p = document.createElement("span");
+      p.className = "punct";
+      p.textContent = ch; // $, commas, dots, plus
       container.appendChild(p);
     }
+  }
+
+  // Animate: each digit "flaps up" from 0 -> target, quickly.
+  // No looping, no modulo flutter, deterministic.
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced){
+    // Just set final digits instantly
+    digitCards.forEach(d => d.card.textContent = String(d.target));
+    return;
+  }
+
+  digitCards.forEach((dObj, idx) => {
+    let cur = 0;
+    const target = dObj.target;
+    const card = dObj.card;
+
+    // Stagger digits slightly so it feels like a board, not a fade
+    const startDelay = idx * 40;
+
+    setTimeout(() => {
+      const step = () => {
+        // flap
+        card.classList.remove("flap");
+        // force reflow so animation re-triggers
+        void card.offsetWidth;
+        card.classList.add("flap");
+
+        card.textContent = String(cur);
+
+        if (cur >= target){
+          // finalize precisely at target
+          card.textContent = String(target);
+          return;
+        }
+
+        cur += 1;
+        // speed: fast but readable
+        setTimeout(step, 60);
+      };
+
+      step();
+    }, startDelay);
   });
 }
 
 /* Load stats */
 fetch(STATS_URL).then(r=>r.text()).then(t=>{
-  const row=splitTSV(t.split(/\r?\n/)[0]);
-  const values=row.slice(1);
-  const box=document.getElementById("stats-box");
+  const row = splitTSV(t.split(/\r?\n/)[0]);
 
-  values.forEach((val,i)=>{
-    const r=document.createElement("div");
-    r.className="stat-row";
+  // Values are F1–M1 (indices 5 through 12) — this is the non-negotiable mapping.
+  const values = row.slice(5, 13);
 
-    const n=document.createElement("div");
-    n.className="stat-number";
-    renderFlipNumber(n,val);
+  const rowsEl = document.getElementById("stats-rows");
+  rowsEl.innerHTML = "";
 
-    const l=document.createElement("div");
-    l.className="stat-label";
-    l.textContent=LABELS[i];
+  values.forEach((val, i) => {
+    const r = document.createElement("div");
+    r.className = "stat-row";
+
+    const n = document.createElement("div");
+    n.className = "stat-number";
+    renderFlapNumber(n, val); // uses exact sheet text; punctuation inline
+
+    const l = document.createElement("div");
+    l.className = "stat-label";
+    l.textContent = LABELS[i];
 
     r.appendChild(n);
     r.appendChild(l);
-    box.appendChild(r);
+    rowsEl.appendChild(r);
   });
-
-  document.getElementById("last-updated").textContent =
-    "Updated: " + new Date().toLocaleString();
 });
 
 /* Load headlines */
 fetch(HEADLINES_URL).then(r=>r.text()).then(t=>{
-  const lines=t.trim().split(/\r?\n/);
-  const h=splitTSV(lines[0]).map(x=>x.toLowerCase());
-  const ti=h.indexOf("article title");
-  const li=h.indexOf("link");
-  const si=h.indexOf("state");
+  const lines = t.trim().split(/\r?\n/);
+  const h = splitTSV(lines[0]).map(x=>x.toLowerCase());
+  const ti = h.indexOf("article title");
+  const li = h.indexOf("link");
+  const si = h.indexOf("state");
 
-  const list=document.getElementById("headline-list");
-  list.innerHTML="";
-  let current=null;
+  const entries = lines.slice(1).map(r=>{
+    const c = splitTSV(r);
+    return { t:c[ti], u:c[li], s:c[si]||"Unknown" };
+  }).filter(e=>e.t && e.u);
 
-  lines.slice(1).forEach(l=>{
-    const c=splitTSV(l);
-    if(!c[ti]||!c[li])return;
-    const s=c[si]||"Unknown";
+  entries.sort((a,b)=>{
+    if(a.s==="National")return-1;
+    if(b.s==="National")return 1;
+    return a.s.localeCompare(b.s) || a.t.localeCompare(b.t);
+  });
 
-    if(s!==current){
-      current=s;
-      const sh=document.createElement("li");
-      sh.className="state-header";
-      sh.textContent=s;
+  const list = document.getElementById("headline-list");
+  list.innerHTML = "";
+  let cur = null;
+
+  entries.forEach(e=>{
+    if(e.s !== cur){
+      cur = e.s;
+      const sh = document.createElement("li");
+      sh.className = "state-header";
+      sh.textContent = cur;
       list.appendChild(sh);
     }
-
-    const it=document.createElement("li");
-    it.className="headline-item";
-    const a=document.createElement("a");
-    a.href=c[li];
-    a.target="_blank";
-    a.textContent=c[ti];
-    it.appendChild(a);
-    list.appendChild(it);
+    const item = document.createElement("li");
+    item.className = "headline-item";
+    const a = document.createElement("a");
+    a.href = e.u;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.textContent = e.t;
+    item.appendChild(a);
+    list.appendChild(item);
   });
+
+  document.getElementById("last-updated").textContent =
+    "Updated: " + new Date().toLocaleString();
 });
 </script>
 
