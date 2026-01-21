@@ -1,115 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>Black Market Brief</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <style>
 :root{
   --blue:#1b4cff;
   --red:#d61f2c;
-  --thin:#e6e6e6;
+  --thin:#e9e9e9;
+  --muted:#333;
 }
+
+/* =========================
+   Base
+========================= */
 
 body{
   margin:0;
-  padding:14px 12px;
+  padding:16px 14px;
+  max-width:1100px;
+  margin-left:auto;
+  margin-right:auto;
   font-family:Arial, Helvetica, sans-serif;
-  max-width:1200px;
-  margin-inline:auto;
+  color:#000;
+  background:#fff;
 }
 
 h1{
   text-align:center;
-  font-size:42px;
+  font-size:44px;
   font-weight:900;
   letter-spacing:3px;
+  text-transform:uppercase;
   font-style:italic;
   transform:skew(-8deg);
-  margin:8px 0;
-  text-shadow:2px 2px 0 var(--blue),4px 4px 0 var(--red);
+  margin:6px 0 8px;
+  text-shadow:
+    2px 2px 0 var(--blue),
+    4px 4px 0 var(--red),
+    6px 6px 0 rgba(0,0,0,.2);
 }
 
 .subhead{
   text-align:center;
   font-size:13px;
   font-weight:800;
+  letter-spacing:.8px;
   text-transform:uppercase;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 
 .meta{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   font-size:12px;
-  margin-bottom:18px;
+  margin-bottom:14px;
+  flex-wrap:wrap;
 }
 
 .pill{
   border:1px solid var(--thin);
-  padding:6px 10px;
   border-radius:999px;
+  padding:6px 10px;
   font-weight:800;
   background:#fafafa;
 }
 
-/* ===== LAYOUT ===== */
+/* =========================
+   Layout
+========================= */
 
 .main{
   display:grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns:360px 1fr;
   gap:28px;
-  align-items:start;
 }
 
-@media (max-width:900px){
+@media(max-width:800px){
   .main{
     grid-template-columns:1fr;
   }
 }
 
-/* ===== STATS BOX ===== */
+/* =========================
+   Stats Box
+========================= */
 
 .stats-box{
   border:1px solid var(--thin);
+  padding:14px 16px;
   background:#fafafa;
-  padding:16px;
 }
 
-.stats-box h3{
-  margin:0 0 14px;
+.stats-title{
   font-size:13px;
   font-weight:900;
+  letter-spacing:1px;
   text-transform:uppercase;
+  margin-bottom:12px;
 }
 
 .stat-row{
   margin-bottom:14px;
 }
 
-.stat-number{
-  font-size:20px;
-  font-weight:900;
-  letter-spacing:0.5px;
-}
-
 .stat-label{
-  margin-top:2px;
   font-size:11px;
   font-weight:800;
+  letter-spacing:.6px;
   text-transform:uppercase;
   color:#333;
+  margin-top:4px;
 }
 
-/* ===== HEADLINES ===== */
+/* =========================
+   Split-flap digits
+========================= */
 
-ul{list-style:none;padding:0;margin:0;}
+.stat-number{
+  display:flex;
+  align-items:center;
+  gap:2px;
+}
+
+.digit{
+  width:22px;
+  height:34px;
+  perspective:300px;
+}
+
+.digit-inner{
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#fff;
+  font-size:20px;
+  font-weight:900;
+  line-height:34px;
+  text-align:center;
+  border-radius:3px;
+  animation:flip .25s ease-out;
+  transform-origin:bottom;
+}
+
+@keyframes flip{
+  from{ transform:rotateX(90deg); }
+  to{ transform:rotateX(0deg); }
+}
+
+.punct{
+  font-size:18px;
+  font-weight:900;
+  padding:0 2px;
+}
+
+/* =========================
+   Headlines
+========================= */
+
+ul{ list-style:none; padding:0; margin:0; }
 
 .state-header{
-  margin:22px 0 6px;
+  margin:18px 0 6px;
   font-size:13px;
   font-weight:900;
+  letter-spacing:1px;
   text-transform:uppercase;
 }
 
@@ -118,7 +177,6 @@ ul{list-style:none;padding:0;margin:0;}
   padding-left:14px;
   position:relative;
   font-size:17px;
-  font-weight:900;
 }
 
 .headline-item::before{
@@ -126,15 +184,22 @@ ul{list-style:none;padding:0;margin:0;}
   position:absolute;
   left:0;
   color:#999;
+  font-weight:900;
 }
 
-a{color:#000;text-decoration:underline;}
+a{
+  color:#000;
+  text-decoration:underline;
+  font-weight:900;
+}
+
+a:hover{ color:#0033cc; }
 
 .footer{
   text-align:center;
-  margin-top:26px;
   font-size:13px;
-  color:#444;
+  color:var(--muted);
+  margin-top:26px;
 }
 </style>
 </head>
@@ -152,8 +217,9 @@ a{color:#000;text-decoration:underline;}
 <div class="main">
 
   <!-- STATS -->
-  <div class="stats-box" id="stats-box">
-    <h3 id="stats-title">Loading…</h3>
+  <div class="stats-box">
+    <div class="stats-title">Seizures and Arrests Since Jan 2025</div>
+    <div id="stats-box"></div>
   </div>
 
   <!-- HEADLINES -->
@@ -165,7 +231,9 @@ a{color:#000;text-decoration:underline;}
 
 </div>
 
-<div class="footer">Built to track contraband enforcement actions.</div>
+<div class="footer">
+  Built to track contraband enforcement actions.
+</div>
 
 <script>
 const STATS_URL =
@@ -174,38 +242,54 @@ const STATS_URL =
 const HEADLINES_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTz6qSLgIjDAsDkravmNu3PKrXbDHyGfKHAEY5r0Tyg0ot0co7rCX_S0Y5XtDgOQ34q0DBH1o1tRbbE/pub?gid=1559123090&single=true&output=tsv";
 
-const LABELS=[
-"in product value",
-"illegal vapes",
-"pounds of black market drugs and synthetics",
-"pounds of high-risk grey zone drugs",
-"grams of psychedelics",
-"firearms",
-"in cash",
-"arrests"
+const LABELS = [
+  "In product value",
+  "Illegal vapes",
+  "Pounds of black market drugs and synthetics",
+  "Pounds of high-risk grey zone drugs",
+  "Grams of psychedelics",
+  "Firearms",
+  "In cash",
+  "Arrests"
 ];
 
-function splitTSV(line){ return line.split("\t").map(v=>v.trim()); }
+function splitTSV(line){
+  return line.split("\t").map(v=>v.trim());
+}
+
+function renderFlipNumber(container, text){
+  container.innerHTML="";
+  [...text].forEach(ch=>{
+    if(/\d/.test(ch)){
+      const d=document.createElement("div");
+      d.className="digit";
+      const i=document.createElement("div");
+      i.className="digit-inner";
+      i.textContent=ch;
+      d.appendChild(i);
+      container.appendChild(d);
+    }else{
+      const p=document.createElement("span");
+      p.className="punct";
+      p.textContent=ch;
+      container.appendChild(p);
+    }
+  });
+}
 
 /* Load stats */
 fetch(STATS_URL).then(r=>r.text()).then(t=>{
   const row=splitTSV(t.split(/\r?\n/)[0]);
-  document.getElementById("stats-title").textContent=row[0];
-
+  const values=row.slice(1);
   const box=document.getElementById("stats-box");
-  box.innerHTML = "";
 
-  // Values are F1–M1 (indices 5 through 12)
-const values = row.slice(5, 13);
-
-values.forEach((val, i) => {
-
+  values.forEach((val,i)=>{
     const r=document.createElement("div");
     r.className="stat-row";
 
     const n=document.createElement("div");
     n.className="stat-number";
-    n.textContent=val;
+    renderFlipNumber(n,val);
 
     const l=document.createElement("div");
     l.className="stat-label";
@@ -215,6 +299,9 @@ values.forEach((val, i) => {
     r.appendChild(l);
     box.appendChild(r);
   });
+
+  document.getElementById("last-updated").textContent =
+    "Updated: " + new Date().toLocaleString();
 });
 
 /* Load headlines */
@@ -225,38 +312,32 @@ fetch(HEADLINES_URL).then(r=>r.text()).then(t=>{
   const li=h.indexOf("link");
   const si=h.indexOf("state");
 
-  const entries=lines.slice(1).map(r=>{
-    const c=splitTSV(r);
-    return{t:c[ti],u:c[li],s:c[si]||"Unknown"};
-  }).filter(e=>e.t&&e.u);
-
-  entries.sort((a,b)=>{
-    if(a.s==="National")return-1;
-    if(b.s==="National")return 1;
-    return a.s.localeCompare(b.s)||a.t.localeCompare(b.t);
-  });
-
   const list=document.getElementById("headline-list");
   list.innerHTML="";
-  let cur=null;
+  let current=null;
 
-  entries.forEach(e=>{
-    if(e.s!==cur){
-      cur=e.s;
-      const h=document.createElement("li");
-      h.className="state-header";
-      h.textContent=cur;
-      list.appendChild(h);
+  lines.slice(1).forEach(l=>{
+    const c=splitTSV(l);
+    if(!c[ti]||!c[li])return;
+    const s=c[si]||"Unknown";
+
+    if(s!==current){
+      current=s;
+      const sh=document.createElement("li");
+      sh.className="state-header";
+      sh.textContent=s;
+      list.appendChild(sh);
     }
-    const li=document.createElement("li");
-    li.className="headline-item";
-    const a=document.createElement("a");
-    a.href=e.u;a.target="_blank";a.textContent=e.t;
-    li.appendChild(a);list.appendChild(li);
-  });
 
-  document.getElementById("last-updated").textContent =
-    "Updated: "+new Date().toLocaleString();
+    const it=document.createElement("li");
+    it.className="headline-item";
+    const a=document.createElement("a");
+    a.href=c[li];
+    a.target="_blank";
+    a.textContent=c[ti];
+    it.appendChild(a);
+    list.appendChild(it);
+  });
 });
 </script>
 
